@@ -1,0 +1,48 @@
+{
+  "manifest_version": 2,
+  "name": "Jenkie",
+  "description": "A handy dandy Chrome extension for Jenkins CI",
+  "version": "0.0.0.1",
+
+  "author": "Yusuke Morita",
+  "homepage_url": "https://github.com/pixel9/jenkie",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+
+  "browser_action": {
+    "default_icon": {
+      "19": "img/grey.png",
+      "38": "img@2x/grey.png"
+    },
+    "default_title": "Jenkie",
+    "default_popup": "popup.html"
+  },
+
+  "background": {
+    "scripts": [
+      "lib/js/jquery.js",
+      "js/store.js",
+      "js/jenkins.js",
+      "js/ball-color.js",
+      "js/notifier.js",
+      "js/background.js"
+    ],
+    "persistent": false
+  },
+
+  "minimum_chrome_version": "37",
+
+  "permissions": [
+    "alarms",
+    "notifications",
+    "storage",
+    "tabs",
+    "http://*/",
+    "https://*/"
+  ],
+
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

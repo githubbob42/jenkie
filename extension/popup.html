@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jenkie</title>
+  <link rel="stylesheet" type="text/css" href="lib/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/popup.css">
+</head>
+<body>
+
+  <div id="monitor" class="offline" data-bind="visible: !showOptions(), css: { offline: !isOnline() }">
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation" data-bind="with: settings.currentView()">
+      <div class="container">
+        <div class="navbar-header">
+
+          <div class="dropdown" data-bind="visible: $root.data.views().length > 0">
+            <a href="#" class="navbar-brand dropdown-toggle" data-toggle="dropdown">
+              <span data-bind="text: name"></span>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <!-- ko foreach: { data: $root.data.views, as: 'view' } -->
+              <li role="presentation" class="divider" data-bind="visible: name === 'Currently Watching'"></li>
+
+              <li data-bind="css: { active: view.name === $parent.name }">
+                <a href="#" data-bind="click: $root.settings.currentView"><span data-bind="text: view.name"></span></a>
+              </li>
+              <!-- /ko -->
+              
+              <li role="presentation" class="divider"></li>
+
+              <li>
+                <a href="#" data-bind="click: function () { showOptions(true); } ">Options</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="watch" data-bind="click: monitor.toggleAll.bind(monitor)">
+            <div class="btn btn-default" title="toggle all notifications" data-bind="css: { 'active': $root.isToggleAllActive() }">
+              <span class="glyphicon glyphicon-bell"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ko with: $root.settings -->
+    <div class="container empty-jobs"
+         data-bind="visible: currentView() && currentView().name === 'Currently Watching' && (!watchList() || watchList().length === 0)">
+      <div class="alert alert-info">You are currently watching all jobs</div>
+    </div>
+    <!-- /ko -->
+
+    <div class="list-group" data-bind="click: clickHandler">
+      <!-- ko foreach: jobList() -->
+      <a href="#" class="job list-group-item"
+         data-bind="css: 'list-group-item-' + (BallColor[color].building ? 'warning' : StatusMap[BallColor[color].color])">
+        <div class="watch">
+          <div class="btn btn-default" title="toggle notification" data-bind="css: { 'active': $root.isCurrentlyWatching($data) }">
+            <span class="glyphicon glyphicon-bell"></span>
+          </div>
+        </div>
+        <span data-bind="text: name"></span>
+        <span class="label" data-bind="visible: BallColor[color].building, css: 'label-' + StatusMap[BallColor[color].color]">building</span>
+      </a>
+      <!-- /ko -->
+    </div>
+
+  </div>
+
+  <div id="options" data-bind="visible: showOptions(), with: options">
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <div class="navbar-brand navbar-left">
+            <span>Options</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" id="alert-error" data-bind="visible: url() && isOnline() === false">
+      <div class="msg-warning">
+        <h4>Unable to connect to Jenkins</h4>
+        <p>Please verify the URL is correct<br><a target="_blank" data-bind="attr: { href: url }, text: url"></a></p>
+      </div>
+    </div>
+
+    <div class="container">
+      <form role="form">
+        <div class="form-group">
+          <label>Jenkins URL</label>
+          <div class="input-group">
+            <span class="input-group-addon"><img src="icon48.png" width="18"></span>
+            <input type="text" class="form-control" required placeholder="http://my-jenkins-server:8080" data-bind="value: url">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Polling Interval: <span data-bind="text: interval"></span> <span data-bind="text: interval() > 1 ? 'minutes' : 'minute'"></span></label>
+          <input type="range" min="1" max="30" step="1" data-bind="value: interval">
+        </div>
+        <button type="submit" class="btn btn-default btn-primary" data-bind="click: $root.saveOptions">Save</button>
+        <button type="button" class="btn btn-link" data-bind="click: function () { window.close(); }">Cancel</button>
+      </form>
+    </div>
+
+  </div>
+  
+  <script src="lib/js/jquery.js"></script>
+  <script src="lib/js/knockout.js"></script>
+  <script src="lib/js/bootstrap.js"></script>
+
+  <script src="js/ball-color.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/monitor.js"></script>
+  <script src="js/popup.js"></script>
+</body>
+</html>
