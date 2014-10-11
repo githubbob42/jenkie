@@ -36,7 +36,7 @@
           </div>
 
           <div class="watch" data-bind="click: monitor.toggleAll.bind(monitor)">
-            <div class="btn btn-default" title="toggle all notifications" data-bind="css: { 'active': $root.isToggleAllActive() }">
+            <div class="btn btn-default" title="toggle all notifications" data-bind="css: { 'active': $root.isWatchingAll() }">
               <span class="glyphicon glyphicon-bell"></span>
             </div>
           </div>
@@ -53,16 +53,16 @@
     <!-- /ko -->
 
     <div class="list-group" data-bind="click: clickHandler">
-      <!-- ko foreach: jobList() -->
+      <!-- ko foreach: { data: jobList(), as: 'job' } -->
       <a href="#" class="job list-group-item"
-         data-bind="css: 'list-group-item-' + (BallColor[color].building ? 'warning' : StatusMap[BallColor[color].color])">
+         data-bind="css: 'list-group-item-' + (BallColor[job.color].building ? 'warning' : StatusMap[BallColor[job.color].color])">
         <div class="watch">
-          <div class="btn btn-default" title="toggle notification" data-bind="css: { 'active': $root.isCurrentlyWatching($data) }">
+          <div class="btn btn-default" title="toggle notification" data-bind="css: { 'active': job.isWatched() }">
             <span class="glyphicon glyphicon-bell"></span>
           </div>
         </div>
         <span data-bind="text: name"></span>
-        <span class="label" data-bind="visible: BallColor[color].building, css: 'label-' + StatusMap[BallColor[color].color]">building</span>
+        <span class="label" data-bind="visible: BallColor[job.color].building, css: 'label-' + StatusMap[BallColor[job.color].color]">building</span>
       </a>
       <!-- /ko -->
     </div>

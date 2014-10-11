@@ -37,6 +37,27 @@ var Monitor = (function ($) {
       }
     }, this);
 
+    this.data.jobs.subscribe(function (jobs) {
+      var settings = this.settings;
+
+      jobs.forEach(function (job) {
+        job.isWatched = ko.computed(function () {
+          var job = this;
+          return (settings.watchList() || []).filter(function (name) {
+            return name === job.name;
+          }).length > 0;
+        }, job);
+      });
+    }, this);
+
+    this.isWatchingAll = ko.computed(function () {
+      if (!this.settings.currentView() || this.jobList().length === 0) return false;
+
+      return this.jobList().reduce(function (watching, job) {
+        return watching && job.isWatched();
+      }.bind(this), true);
+    }, this);
+
     this.settings.watchList.subscribe(function (jobs) {
       Store.saveSettings({ watchList: jobs });
     });
@@ -58,7 +79,7 @@ var Monitor = (function ($) {
   };
 
   Monitor.prototype.toggleAll = function () {
-    if (this.isToggleAllActive()) {
+    if (this.isWatchingAll()) {
       this.settings.watchList([]);
     } else {
       var list = this.jobList().map(function (job) {
@@ -66,20 +87,6 @@ var Monitor = (function ($) {
       });
       this.settings.watchList(list);
     }
-  };
-
-  Monitor.prototype.isToggleAllActive = function () {
-    if (!this.settings.currentView() || this.jobList().length === 0) return false;
-
-    return this.jobList().reduce(function (watching, job) {
-      return watching && this.isCurrentlyWatching(job);
-    }.bind(this), true);
-  };
-
-  Monitor.prototype.isCurrentlyWatching = function (job) {
-    return (this.settings.watchList() || []).filter(function (name) {
-      return name === job.name;
-    }).length > 0;
   };
 
   Monitor.prototype.openJobTab = function (job) {
