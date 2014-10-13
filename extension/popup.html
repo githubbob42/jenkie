@@ -54,16 +54,7 @@
 
     <div class="list-group" data-bind="click: clickHandler">
       <!-- ko foreach: { data: jobList(), as: 'job' } -->
-      <a href="#" class="job list-group-item"
-         data-bind="css: 'list-group-item-' + (BallColor[job.color].building ? 'warning' : StatusMap[BallColor[job.color].color])">
-        <div class="watch">
-          <div class="btn btn-default" title="toggle notification" data-bind="css: { 'active': job.isWatched() }">
-            <span class="glyphicon glyphicon-bell"></span>
-          </div>
-        </div>
-        <span data-bind="text: name"></span>
-        <span class="label" data-bind="visible: BallColor[job.color].building, css: 'label-' + StatusMap[BallColor[job.color].color]">building</span>
-      </a>
+        <job params="jobs: $root.jobList, watched: $root.settings.watchList, job: job"></job>
       <!-- /ko -->
     </div>
 
@@ -115,6 +106,7 @@
   <script src="js/ball-color.js"></script>
   <script src="js/store.js"></script>
   <script src="js/monitor.js"></script>
+  <script src="js/job.js"></script>
   <script src="js/popup.js"></script>
 </body>
 </html>

@@ -10,7 +10,7 @@ body {
 }
 
 .navbar {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #fff;
 }
 
 .navbar .badge {
@@ -74,8 +74,16 @@ body {
   margin: 6px 1px 0;
 }
 
+.job {
+  cursor: pointer;
+  border-color: #fff;
+}
 .label {
   margin-left: 1em;
+  border-radius: 1em;
+}
+.children {
+  margin: 10px -16px 0 0;
 }
 
 .offline .job {

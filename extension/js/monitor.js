@@ -37,25 +37,14 @@ var Monitor = (function ($) {
       }
     }, this);
 
-    this.data.jobs.subscribe(function (jobs) {
-      var settings = this.settings;
-
-      jobs.forEach(function (job) {
-        job.isWatched = ko.computed(function () {
-          var job = this;
-          return (settings.watchList() || []).filter(function (name) {
-            return name === job.name;
-          }).length > 0;
-        }, job);
-      });
-    }, this);
-
     this.isWatchingAll = ko.computed(function () {
       if (!this.settings.currentView() || this.jobList().length === 0) return false;
 
+      var watchList = this.settings.watchList();
+
       return this.jobList().reduce(function (watching, job) {
-        return watching && job.isWatched();
-      }.bind(this), true);
+        return watching && !!~watchList.indexOf(job.name);
+      }, true);
     }, this);
 
     this.settings.watchList.subscribe(function (jobs) {

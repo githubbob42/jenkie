@@ -1,11 +1,3 @@
-// map jenkins colors to bootstrap contextual classes
-var StatusMap = {
-  blue: 'success',
-  yellow: 'warning',
-  red: 'danger',
-  grey: ''
-};
-
 var isOnline = ko.observable();
 var showOptions = ko.observable(false);
 var monitor = new Monitor();
