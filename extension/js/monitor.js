@@ -7,7 +7,8 @@ var Monitor = (function ($) {
     };
     this.settings = {
       watchList: ko.observable(),
-      currentView: ko.observable()
+      currentView: ko.observable(),
+      displayDownstream: ko.observable()
     };
     this.data = {
       views: ko.observableArray(),

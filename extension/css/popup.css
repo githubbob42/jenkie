@@ -83,7 +83,11 @@ body {
   border-radius: 1em;
 }
 .children {
+  display: none;
   margin: 10px -16px 0 0;
+}
+.treeview .children {
+  display: block;
 }
 
 .offline .job {
