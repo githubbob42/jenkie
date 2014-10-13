@@ -6,7 +6,19 @@ var Jenkins = (function ($) {
       getJobs(url)
     ])
     .then(function (results) {
-      return $.extend({ timestamp: +new Date() }, results[0], results[1]);
+      var views = results[0].views,
+          jobs = results[1].jobs;
+
+      jobs.forEach(function (job) {
+        job.upstreamProjects = job.upstreamProjects.map(function (project) { return project.name; });
+        job.downstreamProjects = job.downstreamProjects.map(function (project) { return project.name; });
+      });
+
+      return {
+        views: views,
+        jobs: jobs,
+        timestamp: +new Date()
+      };
     });
   }
 
@@ -15,7 +27,7 @@ var Jenkins = (function ($) {
   }
 
   function getJobs(url) {
-    return getJSON(url + '/api/json?tree=jobs[name,color,lastBuild[number],downstreamProjects[name,color]]');
+    return getJSON(url + '/api/json?tree=jobs[name,color,lastBuild[number],upstreamProjects[name],downstreamProjects[name]]');
   }
 
   function getViews(url) {
