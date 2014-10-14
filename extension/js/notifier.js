@@ -18,6 +18,36 @@ var Notifier = (function () {
     minute: '2-digit'
   };
 
+  function formatName(author) {
+    if (author && author.fullName) {
+      if (author.fullName.indexOf(' ') === -1) return author.fullName;
+
+      return author.fullName.split(' ').map(function (part) {
+        return part[0].toUpperCase();
+      }).join('');
+    } else {
+      return '';
+    }
+  }
+
+  function formatTimestamp(timestamp) {
+    return new Date(timestamp).toLocaleTimeString('en', dateFormatOptions)
+  }
+
+  function createCauseItem(cause) {
+    var item = {
+      title: '',
+      message: cause.shortDescription
+    };
+
+    if (cause.upstreamProject) {
+      msg.title = 'Upstream';
+      msg.message = cause.upstreamProject;
+    }
+
+    return item;
+  }
+
   function processNotifications(settings, newData, oldData) {
     if (!settings || !settings.watchList || settings.watchList.length === 0) return;
     if (!oldData || !oldData.jobs || !newData || !newData.jobs) return;
@@ -50,7 +80,7 @@ var Notifier = (function () {
         var status = data.result ? JenkinsResult[data.result] : BallColor[job.color],
             items = data.changeSet && (data.changeSet.items || []).map(function (item){ 
               return {
-                title: item.author && item.author.fullName, 
+                title: formatName(item.author), 
                 message: item.msg
               };
             });
@@ -64,10 +94,7 @@ var Notifier = (function () {
               return action.causes && action.causes.length;
             })
             .map(function (action) {
-              return {
-                title: '',
-                message: action.causes[0].shortDescription
-              };
+              return createCauseItem(action.causes[0]);
             });
           causes.reverse(); // display most recent trigger first
           items = items.concat(causes);
@@ -75,7 +102,7 @@ var Notifier = (function () {
 
         items.unshift({
           title: status.message,
-          message: new Date(data.timestamp).toLocaleTimeString('en', dateFormatOptions)
+          message: formatTimestamp(data.timestamp)
         });
 
         var notification = {
