@@ -23,7 +23,7 @@ Logo and Ball Icons - [Jenkins CI][Jenkins]
 
 License
 -------
-[MIT License](http://opensource.org/licenses/mit-license.html) (excludes Jenkins logo and ball icons)
+[MIT License](http://opensource.org/licenses/mit-license.html) (excludes fonts, logos, and icons)
 
 
 [Jenkins]: http://jenkins-ci.org/
