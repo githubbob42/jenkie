@@ -35,19 +35,19 @@ $(function (BallColor) {
 
       this.children = ko.computed({
         read: function () {
-          return jobs().filter(function (job) {
+          var matchingUpstream = jobs().filter(function (job) {
             return !!~job.upstreamProjects.indexOf(params.job.name);
           });
-          
-          var _children = job.downstreamProjects.map(function (name) {
-            return ko.utils.arrayFirst(jobs(), function (job) {
-              return job.name === name;
-            })
+
+          var downstreamProjects = job.downstreamProjects.map(function (project) {
+            return project.name;
           });
-          _children = _children.concat(jobs().filter(function (job) {
-            return !!~job.upstreamProjects.indexOf(params.job.name);
-          }));
-          return _children;
+
+          var matchingDownstream = jobs().filter(function (job) {
+            return !!~downstreamProjects.indexOf(job.name);
+          });
+
+          return matchingUpstream.concat(matchingDownstream);
         },
         deferEvaluation: true
       });
