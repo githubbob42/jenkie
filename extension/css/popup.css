@@ -101,6 +101,7 @@ body {
   margin-left: 1em;
   border-radius: 1.6em;
   text-transform: uppercase;
+  font-weight: bold;
 }
 .children {
   display: none;

@@ -27,7 +27,7 @@ var Jenkins = (function ($) {
   }
 
   function getJobs(url) {
-    return getJSON(url + '/api/json?tree=jobs[name,color,lastBuild[number],upstreamProjects[name],downstreamProjects[name]]');
+    return getJSON(url + '/api/json?tree=jobs[name,color,inQueue,lastBuild[number],upstreamProjects[name],downstreamProjects[name]]');
   }
 
   function getViews(url) {

@@ -1,3 +1,5 @@
+/*jshint multistr:true */
+
 $(function (BallColor) {
 
   // map jenkins colors to bootstrap contextual classes
@@ -20,6 +22,7 @@ $(function (BallColor) {
 
       this.name = job.name;
       this.color = ball.color;
+      this.queued = job.inQueue;
       this.building = ball.building;
       this.buildStatus = StatusMap[ball.color];
       this.jobStatus = ball.building ? 'warning' : this.buildStatus;
@@ -58,6 +61,7 @@ $(function (BallColor) {
         </div>\
         <span data-bind="text: name"></span>\
         <span class="label" data-bind="if: building, css: \'label-\' + buildStatus">building</span>\
+        <span class="label" data-bind="if: queued, css: \'label-warning\'">queued</span>\
         <div class="children" data-bind="visible: children().length > 0">\
           <!-- ko foreach: { data: children, as: \'child\' } -->\
           <job params="jobs: $parent.jobs, watched: $parent.watched, job: child"></job>\
