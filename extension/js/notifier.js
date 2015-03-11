@@ -31,7 +31,7 @@ var Notifier = (function () {
   }
 
   function formatTimestamp(timestamp) {
-    return new Date(timestamp).toLocaleTimeString('en', dateFormatOptions)
+    return new Date(timestamp).toLocaleTimeString('en', dateFormatOptions);
   }
 
   function createCauseItem(cause) {
@@ -41,8 +41,8 @@ var Notifier = (function () {
     };
 
     if (cause.upstreamProject) {
-      msg.title = 'Upstream';
-      msg.message = cause.upstreamProject;
+      item.title = 'Upstream';
+      item.message = cause.upstreamProject;
     }
 
     return item;
