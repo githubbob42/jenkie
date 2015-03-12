@@ -17,6 +17,7 @@ $(function () {
     if (settings) {
       monitor.settings.watchList(settings.watchList || []);
       monitor.settings.currentView({ name: settings.defaultView });
+      monitor.settings.showTreeView(settings.showTreeView || false);
     }
   }
 

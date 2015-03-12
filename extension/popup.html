@@ -7,7 +7,7 @@
 </head>
 <body>
 
-  <div id="monitor" class="offline" data-bind="visible: !showOptions(), css: { offline: !isOnline(), treeview: $root.settings.displayDownstream() }">
+  <div id="monitor" class="offline" data-bind="visible: !showOptions(), css: { offline: !isOnline(), treeview: $root.settings.showTreeView() }">
 
     <div class="navbar navbar-default navbar-fixed-top" role="navigation" data-bind="with: settings.currentView()">
       <div class="container">
@@ -41,9 +41,9 @@
             </div>
           </div>
 
-          <div class="watch" data-bind="click: function () { $root.settings.displayDownstream(!$root.settings.displayDownstream()); }.bind(this)">
-            <div class="btn btn-default" title="show/hide downstream projects" data-bind="css: { 'active': $root.settings.displayDownstream() }">
-              <span class="glyphicon glyphicon-arrow-down"></span>
+          <div class="watch" data-bind="click: function () { $root.settings.showTreeView(!$root.settings.showTreeView()); }.bind(this)">
+            <div class="btn btn-default" title="toggle tree view" data-bind="css: { 'active': $root.settings.showTreeView() }">
+              <span class="glyphicon glyphicon-tree-conifer"></span>
             </div>
           </div>
 

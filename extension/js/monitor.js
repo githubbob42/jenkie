@@ -8,7 +8,7 @@ var Monitor = (function ($) {
     this.settings = {
       watchList: ko.observable(),
       currentView: ko.observable(),
-      displayDownstream: ko.observable()
+      showTreeView: ko.observable()
     };
     this.data = {
       views: ko.observableArray(),
@@ -53,6 +53,9 @@ var Monitor = (function ($) {
     });
     this.settings.currentView.subscribe(function (view) {
       Store.saveSettings({ defaultView: view.name });
+    });
+    this.settings.showTreeView.subscribe(function (value) {
+      Store.saveSettings({ showTreeView: value });
     });
   }
 
