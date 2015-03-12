@@ -33,27 +33,47 @@ $(function (BallColor) {
         });
       }, this);
 
+      var downstreamProjectNames = job.downstreamProjects.map(function (project) {
+        return project.name;
+      });
+
+      this.hasDisplayedParent = ko.computed({
+        read: function () {
+          var matchingUpstream = jobs().filter(function (job) {
+            return !!~params.job.upstreamProjects.indexOf(job.name);
+          });
+          if (matchingUpstream.length > 0) return true;
+
+          var matchingDownstream = jobs().filter(function (job) {
+            return job.downstreamProjects.filter(function (project) {
+              return project.name === params.job.name;
+            })[0];
+          });
+          if (matchingDownstream.length > 0) return true;
+
+          return false;
+        }
+      });
+
       this.children = ko.computed({
         read: function () {
           var matchingUpstream = jobs().filter(function (job) {
             return !!~job.upstreamProjects.indexOf(params.job.name);
           });
 
-          var downstreamProjects = job.downstreamProjects.map(function (project) {
-            return project.name;
-          });
-
           var matchingDownstream = jobs().filter(function (job) {
-            return !!~downstreamProjects.indexOf(job.name);
+            return !!~downstreamProjectNames.indexOf(job.name);
           });
 
-          return matchingUpstream.concat(matchingDownstream);
+          return matchingUpstream.concat(matchingDownstream).sort(function (a, b) {
+            return a.name - b.name;
+          });
         },
         deferEvaluation: true
       });
     },
     template:
-      '<div class="job list-group-item" data-bind="css: \'list-group-item-\' + jobStatus">\
+      '<div data-bind="attr: { class: \'job list-group-item list-group-item-\' + jobStatus }, css: { \'has-parent\': hasDisplayedParent }">\
         <div class="watch">\
           <div class="btn btn-default" title="toggle notification" data-bind="css: { active: isWatched }">\
             <span class="glyphicon glyphicon-bell"></span>\

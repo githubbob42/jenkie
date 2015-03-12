@@ -113,6 +113,12 @@ body {
 .treeview .children {
   display: block;
 }
+.treeview .has-parent {
+  display: none;
+}
+.treeview .children .has-parent {
+  display: block;
+}
 
 .offline .job {
   background: #efefef;

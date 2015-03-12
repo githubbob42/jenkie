@@ -2,6 +2,7 @@
   "name": "jenkie",
   "version": "0.0.1",
   "description": "A handy dandy Chrome extension for Jenkins CI",
+  "author": "Yusuke Morita",
   "main": "gruntfile.js",
   "dependencies": {},
   "devDependencies": {
@@ -12,5 +13,8 @@
   "scripts": {
     "postinstall": "grunt"
   },
-  "author": "Yusuke Morita"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pixel9/jenkie.git"
+  }
 }
