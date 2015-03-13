@@ -7,7 +7,7 @@ $(function (BallColor) {
     blue: 'success',
     yellow: 'warning',
     red: 'danger',
-    grey: 'info'
+    grey: ''
   };
 
   ko.components.register('job', {
