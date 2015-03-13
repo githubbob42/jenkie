@@ -94,11 +94,13 @@ body {
   cursor: pointer;
   border-color: #fff;
 }
+.job > span {
+  margin-right: 1em;
+}
 .label {
   position: relative;
   top: -.1em;
   padding: .3em .6em;
-  margin-left: 1em;
   border-radius: 1.6em;
   text-transform: uppercase;
   font-weight: bold;
