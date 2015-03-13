@@ -1,11 +1,11 @@
 // http://javadoc.jenkins-ci.org/hudson/model/BallColor.html
 var BallColor = {
   'aborted': {
-    color: 'red',
+    color: 'grey',
     message: 'Aborted'
   },
   'aborted_anime': {
-    color: 'red',
+    color: 'grey',
     message: 'In Progress',
     building: true
   },

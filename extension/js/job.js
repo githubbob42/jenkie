@@ -7,7 +7,7 @@ $(function (BallColor) {
     blue: 'success',
     yellow: 'warning',
     red: 'danger',
-    grey: ''
+    grey: 'info'
   };
 
   ko.components.register('job', {
@@ -81,7 +81,7 @@ $(function (BallColor) {
         </div>\
         <span data-bind="text: name"></span>\
         <span class="label" data-bind="if: building, css: \'label-\' + buildStatus">building</span>\
-        <span class="label" data-bind="if: queued, css: \'label-warning\'">queued</span>\
+        <span class="label" data-bind="if: queued, css: \'label-info\'">queued</span>\
         <div class="children" data-bind="visible: children().length > 0">\
           <!-- ko foreach: { data: children, as: \'child\' } -->\
           <job params="jobs: $parent.jobs, watched: $parent.watched, job: child"></job>\
