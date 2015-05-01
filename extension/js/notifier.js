@@ -105,6 +105,22 @@ var Notifier = (function () {
           message: formatTimestamp(data.timestamp)
         });
 
+        // display params used
+        if (data.actions) {
+          data.actions
+            .filter(function (action) {
+              return action.parameters && action.parameters.length;
+            })
+            .map(function (action) {
+              action.parameters.forEach(function (param) {
+                items.unshift({
+                  title: param.name,
+                  message: param.value
+                });
+              });
+            });
+        }
+
         var notification = {
           type: 'list',
           iconUrl: '../img@2x/' + status.color + (status.building ? '-building.png' : '.png'),
