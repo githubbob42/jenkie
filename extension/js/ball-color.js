@@ -40,7 +40,7 @@ var BallColor = {
     color: 'grey',
     message: 'Not Built'
   },
-  'notbuilt-anime': {
+  'notbuilt_anime': {
     color: 'grey',
     message: 'In Progress',
     building: true
